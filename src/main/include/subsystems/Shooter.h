@@ -75,12 +75,12 @@ namespace ConShooter {
         constexpr double MOTOR_SPEED = 0.5;
     }
     namespace Indexer {
-        constexpr int MOTOR_ID = 2; // check to make sure this isn't already populated
+        constexpr int MOTOR_ID = 0; // check to make sure this isn't already populated
         constexpr double MOTOR_SPEED = 0.5;
     }
 
     namespace Loader {
-        constexpr int MOTOR_ID = 2;
+        constexpr int MOTOR_ID = 0;
         constexpr double MOTOR_SPEED = 800;
         constexpr double VOLTAGE_TO_IN = 0.50142857142857;
         constexpr double INCH_OFFSET = 1.7;

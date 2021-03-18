@@ -111,8 +111,8 @@ void RobotContainer::ConfigureButtonBindings() {
   // FIXME: change RotateThreeCPM and GoToColorCPM to be on the LaunchPad
   // frc2::Button([this] {return codriver_control.GetRawButton(ConXBOXControl::B); }).WhenPressed(new GoToColorCPM(&m_controlPanelManipulator), false);
 
-  frc2::Button([this] {return codriver_control.GetRawButton(ConLaunchPad::Button::GREEN); }).WhenPressed(new RotateThreeCPM(&m_controlPanelManipulator), false);
-  frc2::Button([this] {return codriver_control.GetRawButton(ConLaunchPad::Button::YELLOW); }).WhenPressed(new GoToColorCPM(&m_controlPanelManipulator), false);
+//  frc2::Button([this] {return codriver_control.GetRawButton(ConLaunchPad::Button::GREEN); }).WhenPressed(new RotateThreeCPM(&m_controlPanelManipulator), false);
+//  frc2::Button([this] {return codriver_control.GetRawButton(ConLaunchPad::Button::YELLOW); }).WhenPressed(new GoToColorCPM(&m_controlPanelManipulator), false);
 
 
   // FIXME: Convert to the Launchpad? 

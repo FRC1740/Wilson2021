@@ -270,6 +270,7 @@ void Shooter::SpinUp()
 
   SetTopMotorSpeed(m_nte_TopMotorInputRPM.GetDouble(ConShooter::Top::OPTIMAL_RPM));
   SetBottomMotorSpeed(bottomMotorTarget);
+  // FIXME: CRE Why are we setting a value for the "kicker" motor in the SpinUp() method?
   SetKickerSpeed(m_nte_KickerMotorSpeed.GetDouble(ConShooter::Kicker::OPTIMAL_RPM));
 }
 
@@ -291,6 +292,7 @@ void Shooter::Jumble(int direction) {
     m_hopperFlapper.Set(TalonSRXControlMode::PercentOutput, ConShooter::HopperFlapper::MOTOR_SPEED);
   }
   else {
+    // I think we want to stop the tower/loader belts here which is hopperFlapper
     m_jumblerMotor.Set(TalonSRXControlMode::PercentOutput, 0);
   }
 }
@@ -333,7 +335,7 @@ void Shooter::SetCodriverControl(frc::XboxController *codriver_control) {
 }
 
 void Shooter::Index(int direction) {
-#if 0 // Turned off to test TOF sensor as the index sensor
+// Turned off to test TOF sensor as the index sensor
     if (m_IndexSensor.GetRange() < 300.0 && m_IndexSensor.GetRange() > 30.0) {
         m_loadMotor.Set(TalonSRXControlMode::Velocity, 0);
         m_nte_DesiredIntakeSpeed.SetDouble(0.0);
@@ -348,9 +350,8 @@ void Shooter::Index(int direction) {
         m_loadMotor.Set(TalonSRXControlMode::Velocity, 0);
         m_nte_DesiredIntakeSpeed.SetDouble(0.0);
     }
-#endif
 
-#if 0
+
     if (m_IndexSensor.GetRange() < 100.0 ) {
         m_loadMotor.Set(TalonSRXControlMode::PercentOutput, (m_nte_DesiredIntakeSpeed.GetDouble(0.1)));
         m_lastIntake = m_timer.Get();
@@ -358,16 +359,12 @@ void Shooter::Index(int direction) {
     else if ((m_lastIntake + m_nte_IntakeDelay.GetDouble(0.0) < m_timer.Get())) {
         m_loadMotor.Set(TalonSRXControlMode::PercentOutput, 0);
     }
-#endif
-
-#if 0
     if (m_IndexSensor.GetRange() < 100.0) {
         m_loadMotor.Set(TalonSRXControlMode::PercentOutput, m_nte_DesiredIntakeSpeed.GetDouble(0.1));
     }
     else {
         m_loadMotor.Set(TalonSRXControlMode::PercentOutput, 0);
     }
-#endif
 }
 
 void Shooter::Undex() {
@@ -375,6 +372,7 @@ void Shooter::Undex() {
   //m_nte_DesiredIntakeSpeed.SetDouble(0.0);
 }
 
+// FIXME: Comments, please!! What is the intention of this method?
 void Shooter::ForceIndex(int direction) {
   m_loadMotor.Set(TalonSRXControlMode::Velocity, 800 * direction);
   m_nte_DesiredIntakeSpeed.SetDouble(800.0 * direction);

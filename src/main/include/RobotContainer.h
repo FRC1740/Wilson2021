@@ -20,7 +20,7 @@
 #include "subsystems/Climber.h"
 #include "subsystems/Shooter.h"
 #include "subsystems/Jumbler.h"
-#include "subsystems/ControlPanelManipulator.h"
+// #include "subsystems/ControlPanelManipulator.h"
 #include "subsystems/Vision.h"
 
 #include "commands/AutoDrive.h"
@@ -46,7 +46,7 @@ class RobotContainer {
   Climber m_climber;
   Shooter m_shooter;
   Jumbler m_jumbler;
-  ControlPanelManipulator m_controlPanelManipulator;
+//  ControlPanelManipulator m_controlPanelManipulator;
   Vision m_vision;
 
   // Commands that are defined in this scope

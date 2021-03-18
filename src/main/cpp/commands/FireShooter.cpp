@@ -9,7 +9,7 @@
 
 FireShooter::FireShooter(Shooter *shooter) : m_shooter(shooter) {
   // Use addRequirements() here to declare subsystem dependencies.
-  AddRequirements(m_shooter);
+  // AddRequirements(m_shooter);
 }
 
 #ifdef ENABLE_SHOOTER
@@ -19,6 +19,7 @@ void FireShooter::Initialize() {
 }
 
 // Called repeatedly when this Command is scheduled to run
+// FIXME: CRE What is the intention of the ForceIndex() & ForceJumble() methods?
 void FireShooter::Execute() {
   m_shooter->ForceIndex(1);
 
@@ -29,7 +30,8 @@ void FireShooter::Execute() {
 
 // Called once the command ends or is interrupted.
 void FireShooter::End(bool interrupted) {
-  m_shooter->Undex();
+  // FIXME: CRE What is the intention of the Undex() and Dejumble() methods?
+  m_shooter->Undex(); 
   m_shooter->Dejumble();
 }
 
