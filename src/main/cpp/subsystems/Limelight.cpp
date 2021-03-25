@@ -19,7 +19,7 @@ LimeLight::LimeLight() {
 void LimeLight::Periodic() {}
 
 double LimeLight::GetValidTarget(){
-    return m_Limelight_Table->GetNumber("tv", 0.0)
+    return m_Limelight_Table->GetNumber("tv", 0.0);
 }
 
 double LimeLight::GetHorizontalOffset(){
