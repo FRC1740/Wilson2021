@@ -21,6 +21,7 @@
 #include "subsystems/Shooter.h"
 #include "subsystems/Jumbler.h"
 // #include "subsystems/ControlPanelManipulator.h"
+#include "subsystems/Limelight.h"
 #include "subsystems/Vision.h"
 
 #include "commands/AutoDrive.h"
@@ -48,7 +49,7 @@ class RobotContainer {
   Jumbler m_jumbler;
 //  ControlPanelManipulator m_controlPanelManipulator;
   Vision m_vision;
-
+  LimeLight m_light;
   // Commands that are defined in this scope
   AutoDrive m_autoDrive;
   EngageClimberLock m_lockClimber;

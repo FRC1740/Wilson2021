@@ -30,6 +30,8 @@
 #include "commands/FireShooter.h"
 #include "commands/EngageClimberLock.h"
 #include "commands/DisengageClimberLock.h"
+#include "commands/AlignCrossHair.h"
+
 
 #include "RobotContainer.h"
 
@@ -98,6 +100,8 @@ void RobotContainer::ConfigureButtonBindings() {
   frc2::Button([this] {return codriver_control.GetRawButton(ConLaunchPad::Button::YELLOW); }).WhileHeld(new JumbleShooter(&m_shooter, 1));
 #endif // ENABLE_SHOOTER
 
+// New Vision
+frc2::Button([this] { return driver_control.GetRawButton(ConXBOXControl::A); }).WhenHeld(new AlignCrossHair(&m_driveTrain, &m_light));
 #ifdef ENABLE_VISION
   // Vision
   frc2::Button([this] {return driver_control.GetRawButton(ConXBOXControl::SELECT); }).WhileHeld(new AlignToPlayerStationPID(&m_vision, &m_driveTrain));

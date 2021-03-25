@@ -1,5 +1,8 @@
 # Created by https://www.gitignore.io/api/c++,java,linux,macos,gradle,windows,visualstudiocode
 
+# env.h is used for compile-time stamps and version information
+env.h
+
 ### C++ ###
 # Prerequisites
 *.d

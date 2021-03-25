@@ -335,7 +335,7 @@ void Shooter::SetCodriverControl(frc::XboxController *codriver_control) {
 }
 
 void Shooter::Index(int direction) {
-#if 0 // Turned off to test TOF sensor as the index sensor
+#if 1 // Turned off to test TOF sensor as the index sensor
     if (m_IndexSensor.GetRange() < 300.0 && m_IndexSensor.GetRange() > 30.0) {
         m_loadMotor.Set(TalonSRXControlMode::Velocity, 0);
         m_nte_DesiredIntakeSpeed.SetDouble(0.0);

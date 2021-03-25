@@ -27,6 +27,8 @@ namespace ConMath {
     constexpr double PI = M_PI; // 3.141592;
     constexpr double METERS_2_INCH = .0254; // m/in
     constexpr double MINUTES_2_SECONDS = 1/60.; // sec/min
+    constexpr double RAD_2_DEG = 180.0/PI;
+    constexpr double DEG_2_RAD = 1/RAD_2_DEG;
 }
 
 namespace ConLimelight {
