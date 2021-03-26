@@ -13,6 +13,7 @@
 #include <frc/shuffleboard/Shuffleboard.h>
 #include <frc/shuffleboard/ShuffleboardTab.h>
 #include <networktables/NetworkTableEntry.h>
+#include <AHRS.h>				 
 
 #include "Constants.h"
 
@@ -38,6 +39,12 @@ namespace ConDriveTrain {
     // Conversion factor Ticks -> Inches
     // constexpr double ENCODER_TICKS_TO_INCHES = 2.0 + (2/9); // 0.58
     // constexpr double ENCODER_TICKS_OFFSET = -6.0 - (2/3);
+
+    // degrees to in, measured values on car O-O 32.5 I-I 23.5 O-I 27.375
+    constexpr double ANGLE_2_IN = 25.5*ConMath::PI/360;
+    constexpr double IN_2_ANGLE= 1/ANGLE_2_IN;
+
+
 }
 
 class DriveTrain : public frc2::SubsystemBase {
@@ -79,14 +86,31 @@ class DriveTrain : public frc2::SubsystemBase {
   double GetLeftDistance();
 
   double GetAverageEncoderDistance();
-
+  
+  double GetGyroAngle();
   void ResetEncoders();
+  void GoToAngle(double angle);
+  void ResetGyro();
+  //void SetSafety(bool safety);
   
  private:
   // Components (e.g. motor controllers and sensors) should generally be
   // declared private and exposed only through public methods.
 
   double m_maxOutput = 1.0;
+  AHRS *gyro;
+  /* Drive Train Smart Motion PID set-up below */
+  rev::CANPIDController left_pidController = m_leftMotorA.GetPIDController();
+  rev::CANPIDController right_pidController = m_rightMotorA.GetPIDController();
+
+  // default PID coefficients
+  double kP = 5e-5, kI = 1e-6, kD = 0, kIz = 0, kFF = 0.000156, kMaxOutput = 1, kMinOutput = -1;
+
+  // default smart motion coefficients
+  double kMaxVel = 2000, kMinVel = 0, kMaxAcc = 1500, kAllErr = 0;
+
+  // motor max RPM
+  const double MaxRPM = 5700;
 
   // Neo motor controllers
   rev::CANSparkMax m_rightMotorA{ConDriveTrain::RIGHT_MOTOR_A_ID, rev::CANSparkMax::MotorType::kBrushless};

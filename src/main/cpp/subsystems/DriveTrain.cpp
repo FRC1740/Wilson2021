@@ -21,9 +21,62 @@ DriveTrain::DriveTrain() {
   m_leftMotorA.SetInverted(ConDriveTrain::INVERSION);
   m_leftMotorB.SetInverted(ConDriveTrain::INVERSION);
 
+  // set PID coefficients
+  // left pid controller
+  left_pidController.SetP(kP);
+  left_pidController.SetI(kI);
+  left_pidController.SetD(kD);
+  left_pidController.SetIZone(kIz);
+  left_pidController.SetFF(kFF);
+  left_pidController.SetOutputRange(kMinOutput, kMaxOutput);
+
+  // right pid controller
+  right_pidController.SetP(kP);
+  right_pidController.SetI(kI);
+  right_pidController.SetD(kD);
+  right_pidController.SetIZone(kIz);
+  right_pidController.SetFF(kFF);
+  right_pidController.SetOutputRange(kMinOutput, kMaxOutput);
+
+  /**
+   * Smart Motion coefficients are set on a CANPIDController object
+   * 
+   * - SetSmartMotionMaxVelocity() will limit the velocity in RPM of
+   * the pid controller in Smart Motion mode
+   * - SetSmartMotionMinOutputVelocity() will put a lower bound in
+   * RPM of the pid controller in Smart Motion mode
+   * - SetSmartMotionMaxAccel() will limit the acceleration in RPM^2
+   * of the pid controller in Smart Motion mode
+   * - SetSmartMotionAllowedClosedLoopError() will set the max allowed
+   * error for the pid controller in Smart Motion mode
+   */
+  // left pid controller
+  left_pidController.SetSmartMotionMaxVelocity(kMaxVel);
+  left_pidController.SetSmartMotionMinOutputVelocity(kMinVel);
+  left_pidController.SetSmartMotionMaxAccel(kMaxAcc);
+  left_pidController.SetSmartMotionAllowedClosedLoopError(kAllErr);
+
+  //right pid controller
+  right_pidController.SetSmartMotionMaxVelocity(kMaxVel);
+  right_pidController.SetSmartMotionMinOutputVelocity(kMinVel);
+  right_pidController.SetSmartMotionMaxAccel(kMaxAcc);
+  right_pidController.SetSmartMotionAllowedClosedLoopError(kAllErr);
+
   // Set additional motor controllers on drive train to follow
   m_rightMotorB.Follow(m_rightMotorA, false);
   m_leftMotorB.Follow(m_leftMotorA, false);
+
+ // NavX gyro
+  gyro = new AHRS(frc::SPI::Port::kMXP);
+
+  m_leftEncoderA.SetPositionConversionFactor(ConDriveTrain::ENCODER_2_IN);
+  m_rightEncoderA.SetPositionConversionFactor(ConDriveTrain::ENCODER_2_IN);
+
+  m_leftMotorA.BurnFlash();
+  m_leftMotorB.BurnFlash();
+  m_rightMotorA.BurnFlash();
+  m_rightMotorB.BurnFlash();
+
 #endif // ENABLE_DRIVETRAIN
 
   // Create and get reference to SB tab
@@ -90,4 +143,18 @@ double DriveTrain::GetAverageEncoderDistance() {
   // return (m_leftEncoderA.GetPosition() - m_rightEncoderA.GetPosition()) / 2.0;
   return ((GetLeftDistance() - GetRightDistance()) / 2.0)/ 13.16; // FIXME: Fudge Factor 
 }
+
+void DriveTrain::GoToAngle(double angle) {
+  angle *= ConDriveTrain::ANGLE_2_IN;
+  left_pidController.SetReference(angle, rev::ControlType::kSmartMotion);
+  right_pidController.SetReference(angle, rev::ControlType::kSmartMotion);
+}
+
+double DriveTrain::GetGyroAngle() {return gyro->GetAngle();}
+																	   
+void DriveTrain::ResetGyro() {gyro->Reset();}												
+																				 
+
+// void DriveTrain::SetSafety(bool safety) { SetSafetyEnabled(safety);}
+
 #endif // ENABLE_DRIVETRAIN

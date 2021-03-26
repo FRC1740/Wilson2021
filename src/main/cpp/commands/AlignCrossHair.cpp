@@ -19,7 +19,7 @@ void AlignCrossHair::Initialize() {
   // m_drive->SetSafety(false);
   m_drive->ResetEncoders();
   // FIXME: The GoToAngle() method does not exist in the drive train subsystem
-  // m_drive->GoToAngle(angle);
+  m_drive->GoToAngle(angle);
 }
 // Called repeatedly when this Command is scheduled to run
 void AlignCrossHair::Execute() {}
