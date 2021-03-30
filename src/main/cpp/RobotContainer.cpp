@@ -44,11 +44,22 @@ RobotContainer::RobotContainer() : m_autoDrive(&m_driveTrain, &m_shooter), m_loc
   ConfigureButtonBindings();
 
 #ifdef ENABLE_DRIVETRAIN
+#define ENABLE_FLIGHTSTICK
+#ifdef ENABLE_FLIGHTSTICK
+  // Set up default drive command
+  m_driveTrain.SetDefaultCommand(TeleOpDrive(
+    &m_driveTrain,
+    [this] { return driver_control.GetRawAxis(ConFlightControl::ELEVATOR); },
+    [this] { return driver_control.GetRawAxis(ConFlightControl::RUDDER); }));
+
+#endif
+#ifndef ENABLE_FLIGHTSTICK
   // Set up default drive command
   m_driveTrain.SetDefaultCommand(TeleOpDrive(
     &m_driveTrain,
     [this] { return driver_control.GetRawAxis(ConXBOXControl::RIGHT_TRIGGER) - driver_control.GetRawAxis(ConXBOXControl::LEFT_TRIGGER); },
     [this] { return driver_control.GetRawAxis(ConXBOXControl::LEFT_JOYSTICK_X); }));
+#endif
 #endif // ENABLE_DRIVETRAIN
 
 #ifdef ENABLE_CLIMBER

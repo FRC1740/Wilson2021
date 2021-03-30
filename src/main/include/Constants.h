@@ -73,6 +73,16 @@ namespace ConShuffleboard {
     constexpr char VisionTab[] = "Vision";
 }
 
+namespace ConFlightControl {
+    // Axes
+    constexpr int AILERON = 0;
+    constexpr int ELEVATOR = 1;
+    constexpr int RUDDER = 2;
+    constexpr int TRIM = 3;
+    // Buttons
+    constexpr int TRIGGER = 0;
+}
+
 namespace ConXBOXControl {
     // Axis inputs
     constexpr int LEFT_JOYSTICK_X = 0;
