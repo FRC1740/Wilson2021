@@ -101,14 +101,25 @@ void RobotContainer::ConfigureButtonBindings() {
 
 #ifdef ENABLE_SHOOTER
   // Shooter
+  // Uncomment the next line if the Loader/Indexer is working...
+  // #define LOADER_INDEXER
+  #ifdef LOADER_INDEXER
   // FIXME April: Two Red/Blue/Yellow
-  frc2::Button([this] {return codriver_control.GetRawButton(ConLaunchPad::Switch::RED); }).WhenHeld(new SpinUpShooter(&m_shooter));
   frc2::Button([this] {return codriver_control.GetRawButton(ConLaunchPad::Switch::BLUE); }).WhenHeld(new IntakeShooter(&m_shooter));
   frc2::Button([this] {return codriver_control.GetRawButton(ConLaunchPad::Switch::YELLOW); }).WhileHeld(new FlapHopper(&m_shooter));
 
   frc2::Button([this] {return codriver_control.GetRawButton(ConLaunchPad::Button::RED); }).WhileHeld(new FireShooter(&m_shooter));
   frc2::Button([this] {return codriver_control.GetRawButton(ConLaunchPad::Button::BLUE); }).WhileHeld(new UntakeShooter(&m_shooter));
   frc2::Button([this] {return codriver_control.GetRawButton(ConLaunchPad::Button::YELLOW); }).WhileHeld(new JumbleShooter(&m_shooter, 1));
+  #else
+  // CRE: Basic independent motor configuration for shooting/loading/jumbling
+  frc2::Button([this] {return codriver_control.GetRawButton(ConLaunchPad::Switch::RED); }).WhenHeld(new SpinUpShooter(&m_shooter));
+  // The loader system is unfortunately connected to the old hopper flapper motor...
+  frc2::Button([this] {return codriver_control.GetRawButton(ConLaunchPad::Switch::BLUE); }).WhileHeld(new FlapHopper(&m_shooter));
+
+  frc2::Button([this] {return codriver_control.GetRawButton(ConLaunchPad::Button::RED); }).WhileHeld(new FireShooter(&m_shooter));
+  frc2::Button([this] {return codriver_control.GetRawButton(ConLaunchPad::Button::BLUE); }).WhileHeld(new UntakeShooter(&m_shooter));
+  #endif
 #endif // ENABLE_SHOOTER
 
 // New Vision

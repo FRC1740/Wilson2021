@@ -15,24 +15,28 @@ FireShooter::FireShooter(Shooter *shooter) : m_shooter(shooter) {
 #ifdef ENABLE_SHOOTER
 // Called when the command is initially scheduled.
 void FireShooter::Initialize() {
-  m_timerStart = m_shooter->m_timer.Get();
+  // m_timerStart = m_shooter->m_timer.Get();
 }
 
 // Called repeatedly when this Command is scheduled to run
 // FIXME: CRE What is the intention of the ForceIndex() & ForceJumble() methods?
 void FireShooter::Execute() {
+  m_shooter->Feed();
+  /*
   m_shooter->ForceIndex(1);
 
   if (m_shooter->m_timer.Get() - m_timerStart > m_shooter->ShooterDelay()) {
     m_shooter->ForceJumble(-1);
   }
+  */
 }
 
 // Called once the command ends or is interrupted.
 void FireShooter::End(bool interrupted) {
   // FIXME: CRE What is the intention of the Undex() and Dejumble() methods?
-  m_shooter->Undex(); 
-  m_shooter->Dejumble();
+  // m_shooter->Undex(); 
+  // m_shooter->Dejumble();
+  m_shooter->StopFeed();
 }
 
 // Returns true when the command should end.

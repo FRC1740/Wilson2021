@@ -17,14 +17,16 @@ void UntakeShooter::Initialize() {}
 
 // Called repeatedly when this Command is scheduled to run
 void UntakeShooter::Execute() {
-  m_shooter->ForceJumble(1);
-  m_shooter->ForceIndex(-1);
+  m_shooter->Starve();
+  // m_shooter->ForceJumble(1);
+  // m_shooter->ForceIndex(-1);
 }
 
 // Called once the command ends or is interrupted.
 void UntakeShooter::End(bool interrupted) {
-  m_shooter->Undex();
-  m_shooter->Dejumble();
+  // m_shooter->Undex();
+  // m_shooter->Dejumble();
+  m_shooter->StopFeed();
 }
 
 // Returns true when the command should end.

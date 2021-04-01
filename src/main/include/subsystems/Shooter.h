@@ -70,9 +70,10 @@ namespace ConShooter {
         constexpr int MOTOR_ID = 1;
         constexpr double MOTOR_SPEED = 0.5;
     }
+    // The "Hopper Flapper" is now the elevator motor
     namespace HopperFlapper {
         constexpr int MOTOR_ID = 2;
-        constexpr double MOTOR_SPEED = 0.5;
+        constexpr double MOTOR_SPEED = 1.0;
     }
     namespace Indexer {
         constexpr int MOTOR_ID = 0; // check to make sure this isn't already populated
@@ -164,6 +165,12 @@ class Shooter : public frc2::SubsystemBase {
   bool IsIndexSensorClear();
 
   double ShooterDelay();
+
+  // These last two methods are emergency additions because the
+  // code has become two convoluted and the indexer isn't working.
+  void Feed();
+  void Starve();
+  void StopFeed();
 
   frc::XboxController *m_codriver_control = nullptr;
   frc::Timer m_timer;

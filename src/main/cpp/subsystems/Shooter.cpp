@@ -289,7 +289,7 @@ void Shooter::Jumble(int direction) {
   if (IsIndexSensorClear()) {
     if (direction != 1) { speed = -speed; }
     m_jumblerMotor.Set(TalonSRXControlMode::PercentOutput, speed);
-    m_hopperFlapper.Set(TalonSRXControlMode::PercentOutput, ConShooter::HopperFlapper::MOTOR_SPEED);
+    // NO!!! m_hopperFlapper.Set(TalonSRXControlMode::PercentOutput, ConShooter::HopperFlapper::MOTOR_SPEED);
   }
   else {
     // I think we want to stop the tower/loader belts here which is hopperFlapper
@@ -301,13 +301,13 @@ void Shooter::ForceJumble(int direction) {
   double speed = m_nte_JumblerMotorSpeed.GetDouble(ConShooter::Jumbler::MOTOR_SPEED);
   if (direction != 1) { speed = -speed; }
   m_jumblerMotor.Set(TalonSRXControlMode::PercentOutput, speed);
-  m_hopperFlapper.Set(TalonSRXControlMode::PercentOutput, ConShooter::HopperFlapper::MOTOR_SPEED);
+  // NO!!! m_hopperFlapper.Set(TalonSRXControlMode::PercentOutput, ConShooter::HopperFlapper::MOTOR_SPEED);
 }
 
 // Used by JumbleShooter
 void Shooter::Dejumble() {
   m_jumblerMotor.Set(TalonSRXControlMode::PercentOutput, 0.0);
-  m_hopperFlapper.Set(TalonSRXControlMode::PercentOutput, 0.0);
+  // NO!!! m_hopperFlapper.Set(TalonSRXControlMode::PercentOutput, 0.0);
 }
 
 // "Choo choo" motor used by FlapHopper() for manual control
@@ -389,5 +389,16 @@ bool Shooter::IsIndexSensorClear() {
 
 double Shooter::ShooterDelay() {
   return m_nte_ShooterDelay.GetDouble(0.0);
+}
+// Activate Feed motor which moves balls from hopper to elevator
+void Shooter::Feed() {
+  m_jumblerMotor.Set(TalonSRXControlMode::PercentOutput, -.5);
+}
+// Reverse Feed motor (helps prevent/fix jams)
+void Shooter::Starve() {
+  m_jumblerMotor.Set(TalonSRXControlMode::PercentOutput, .5);
+}
+void Shooter::StopFeed() {
+  m_jumblerMotor.Set(TalonSRXControlMode::PercentOutput, 0.0);  
 }
 #endif // ENABLE_SHOOTER
