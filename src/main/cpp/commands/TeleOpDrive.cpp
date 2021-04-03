@@ -29,7 +29,7 @@ void TeleOpDrive::Execute() {
 
   // Get adjustment values
   double speedN = m_driveTrain->m_nte_DriveSpeedFilter.GetDouble(10.0);
-  double rotationN = m_driveTrain->m_nte_DriveRotationFilter.GetDouble(5.0);
+  double rotationN = m_driveTrain->m_nte_DriveRotationFilter.GetDouble(8.0);
   if (speedN < 1.0) { speedN = 1.0; }
   if (rotationN < 1.0) { rotationN = 1.0; }
   double exponent = m_driveTrain->m_nte_InputExponent.GetDouble(1.0);

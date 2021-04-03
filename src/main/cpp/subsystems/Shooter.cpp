@@ -19,8 +19,8 @@ Shooter::Shooter() {
     m_timer.Reset();
     m_timer.Start();
     // Invert shooter motors correctly
-    m_topMotor.SetInverted(false);
-    m_bottomMotor.SetInverted(true);
+    m_topMotor.SetInverted(true);
+    m_bottomMotor.SetInverted(false);
     m_kickerMotor.SetInverted(true);
     // m_jumblerMotor.SetInverted(true);
 

@@ -44,7 +44,7 @@ RobotContainer::RobotContainer() : m_autoDrive(&m_driveTrain, &m_shooter), m_loc
   ConfigureButtonBindings();
 
 #ifdef ENABLE_DRIVETRAIN
-#define ENABLE_FLIGHTSTICK
+// #define ENABLE_FLIGHTSTICK
 #ifdef ENABLE_FLIGHTSTICK
   // Set up default drive command
   m_driveTrain.SetDefaultCommand(TeleOpDrive(
@@ -58,7 +58,8 @@ RobotContainer::RobotContainer() : m_autoDrive(&m_driveTrain, &m_shooter), m_loc
   m_driveTrain.SetDefaultCommand(TeleOpDrive(
     &m_driveTrain,
     [this] { return driver_control.GetRawAxis(ConXBOXControl::RIGHT_TRIGGER) - driver_control.GetRawAxis(ConXBOXControl::LEFT_TRIGGER); },
-    [this] { return driver_control.GetRawAxis(ConXBOXControl::LEFT_JOYSTICK_X); }));
+    // Scale turning by a 25% for at-home challenges  
+    [this] { return driver_control.GetRawAxis(ConXBOXControl::LEFT_JOYSTICK_X/4); }));
 #endif
 #endif // ENABLE_DRIVETRAIN
 

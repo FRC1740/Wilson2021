@@ -115,7 +115,7 @@ void DriveTrain::TankDrive(double left, double right){
 double DriveTrain::GetMaxOutput() {
     return m_maxOutput;
 }
-
+// Why is this method recursive?
 void DriveTrain::SetMaxOutput(double maxOutput) {
   m_maxOutput = maxOutput;
   m_driveTrain.SetMaxOutput(maxOutput);
