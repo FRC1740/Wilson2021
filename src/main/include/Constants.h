@@ -116,18 +116,18 @@ auto DeadZone = [] (double value) { return (std::fabs(value) > ConXBOXControl::D
 // Texas Instruments Controller (MSP430F5529 LaunchPad)
 namespace ConLaunchPad {
     namespace Button {
-        constexpr int RED = 1;
-        constexpr int BLUE = 2;
-        constexpr int YELLOW = 3;
-        constexpr int GREEN = 4;
-        constexpr int WHITE = 5;
+        constexpr int RED = 1;  // Jumble Fwd
+        constexpr int BLUE = 2; // Jumble Rev
+        constexpr int YELLOW = 3; // Not Used
+        constexpr int GREEN = 4; // Not Used
+        constexpr int WHITE = 5; // Climber Unlock (Hold to unlock)
     }
 
     namespace Switch {
         constexpr int RED = 6;
         constexpr int BLUE = 7;
         constexpr int YELLOW = 8;
-        constexpr int GREEN = 9;
+        constexpr int GREEN = 9; // Reset/Disable Climber Encoder
     }
 
     namespace Dial {

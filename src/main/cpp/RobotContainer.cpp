@@ -66,6 +66,7 @@ RobotContainer::RobotContainer() : m_autoDrive(&m_driveTrain, &m_shooter), m_loc
 #ifdef ENABLE_CLIMBER
   // Make climber aware of operator input
   m_climber.SetCodriverControl(&codriver_control);
+  m_climber.SetDriverControl(&driver_control);
 #endif // ENABLE_CLIMBER
 
 #ifdef ENABLE_SHOOTER

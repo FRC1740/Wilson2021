@@ -7,6 +7,7 @@
 
 #include "commands/OperateManualClimber.h"
 #include "subsystems/Climber.h"
+#include "Constants.h"
 
 OperateManualClimber::OperateManualClimber(Climber *climber) : m_climber(climber) {
   // Use addRequirements() here to declare subsystem dependencies.
@@ -21,8 +22,10 @@ void OperateManualClimber::Initialize() {
 
 // Called repeatedly when this Command is scheduled to run
 void OperateManualClimber::Execute() {
-  double speed = m_climber->m_codriver_control->GetRawAxis(ConLaunchPad::RIGHT_STICK_Y); // Inverted
+  // CRE 10/14/21 The joysticks on the LaunchPad controller are NOT working
+  // double speed = m_climber->m_codriver_control->GetRawAxis(ConLaunchPad::RIGHT_STICK_Y); // Inverted
   // double speed = -m_climber->m_codriver_control->GetRawAxis(ConLaunchPad::LEFT_STICK_Y); // Inverted
+  double speed = m_climber->m_driver_control->GetRawAxis(ConXBOXControl::RIGHT_JOYSTICK_Y); // Inverted
   m_climber->Go(speed);
 }
 

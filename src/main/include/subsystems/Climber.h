@@ -11,7 +11,8 @@
 #include <ctre/Phoenix.h>
 #include <rev/CANSparkMax.h>
 #include <frc/DutyCycleEncoder.h>
-#include <frc/DoubleSolenoid.h>
+//#include <frc/DoubleSolenoid.h>
+#include <frc/Servo.h>
 #include <frc/shuffleboard/Shuffleboard.h>
 #include <frc/shuffleboard/ShuffleboardTab.h>
 #include <networktables/NetworkTableEntry.h>
@@ -23,8 +24,12 @@
 namespace ConClimber {
     // Motor
     constexpr int MOTOR_ID = 1; // 9?;
-    constexpr int SOLENOID_LOCK_ID = 6; // Test - may have to swap these
-    constexpr int SOLENOID_UNLOCK_ID = 7; // Test - may have to swap these
+    // Solenoid replaced with Servo for lock actuation
+    constexpr int SERVO_LOCK_ID = 1; // This is a DIO/PWM Port
+    constexpr int SERVO_LOCK = 0.0; // Test - may have to swap these
+    constexpr int SERVO_UNLOCK = 1.0; // Test - may have to swap these
+    //constexpr int SOLENOID_LOCK_ID = 6; // Test - may have to swap these
+    //constexpr int SOLENOID_UNLOCK_ID = 7; // Test - may have to swap these
     constexpr double EXT_SPEED = -0.5; // CRE 02-10 Negative motor input should extend
     constexpr double RET_SPEED = 0.5; // CRE 02-10 Positive motor input should retract
     constexpr double ROTATION_DISTANCE = 3.75; // inches #35 Chain = .375 pitch x 10 tooth = 3.75 inches
@@ -46,6 +51,7 @@ class Climber : public frc2::SubsystemBase {
   // CRE: The driver/codriver controller objects are defined in RobotContainer
   // frc::XboxController codriver_control{ConXBOXControl::CODRIVER_CONTROLLER_PORT};
   frc::XboxController *m_codriver_control = nullptr;
+  frc::XboxController *m_driver_control = nullptr;
 
   void ResetEncoder();
  
@@ -63,6 +69,7 @@ class Climber : public frc2::SubsystemBase {
   void Periodic();
 
   void SetCodriverControl(frc::XboxController *codriver_control);
+  void SetDriverControl(frc::XboxController *driver_control);
 
  private:
   // Components (e.g. motor controllers and sensors) should generally be
@@ -70,7 +77,9 @@ class Climber : public frc2::SubsystemBase {
   //TalonSRX m_motor{ConClimber::MOTOR_ID};
   rev::CANSparkMax m_motor{ConClimber::MOTOR_ID, rev::CANSparkMax::MotorType::kBrushless}; //Replace with SparkMAX
   frc::DutyCycleEncoder m_dutyCycleEncoder{0};
-  frc::DoubleSolenoid m_climberLock{ConClimber::SOLENOID_LOCK_ID, ConClimber::SOLENOID_UNLOCK_ID};
+  // Need some kind of servo object instead of the solenoid
+  // frc::DoubleSolenoid m_climberLock{ConClimber::SOLENOID_LOCK_ID, ConClimber::SOLENOID_UNLOCK_ID};
+  frc::Servo m_climberLock{ConClimber::SERVO_LOCK_ID};
 
   double m_climberPosition;
   bool m_Locked;

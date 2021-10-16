@@ -51,12 +51,13 @@ void Climber::Go(double speed) {
   // If lock is engaged, OR we're beyond the encoder soft limits, DON'T RUN
   if (m_Locked) { 
     m_motor.Set(0.0);
+    printf("Climber is locked!");
   }
-
   // If Green Switch is active (Up/On), IGNORE encoder limits *** DANGER ****
   else if ((m_codriver_control != nullptr) && 
       (m_codriver_control->GetRawButton(ConLaunchPad::Switch::GREEN))) { // Nearest to climber controls
       m_motor.Set(speed);
+      printf("Climber unlocked: Setting speed to %3.1f", &speed);
   }
   // Extend = Decreasing/More Negative
   else if (speed < 0.0 && m_climberPosition > ConClimber::EXT_LIMIT) {
@@ -80,14 +81,16 @@ void Climber::Stop() {
 
 // Used by OperateManualClimber and EngageClimberLock
 void Climber::Lock() {
-  m_Locked = true;
   m_motor.Set(0.0);
-  m_climberLock.Set(frc::DoubleSolenoid::kForward);
+  // m_climberLock.Set(frc::DoubleSolenoid::kForward);
+  m_climberLock.Set(ConClimber::SERVO_LOCK);
+  m_Locked = true;
 }
 
 // Used only by OperateManualClimber
 void Climber::Unlock() {
-  m_climberLock.Set(frc::DoubleSolenoid::kReverse);
+  //m_climberLock.Set(frc::DoubleSolenoid::kReverse);
+  m_climberLock.Set(ConClimber::SERVO_UNLOCK);
   m_Locked = false;
 }
 
@@ -100,6 +103,7 @@ void Climber::Periodic() {
 
   if ((!m_Locked) &&
      (m_codriver_control != nullptr)) {
+       printf("Climbing!");
     Climber::Go(m_codriver_control->GetRawAxis(ConLaunchPad::RIGHT_STICK_Y));
   }
 
@@ -123,4 +127,9 @@ void Climber::Periodic() {
 void Climber::SetCodriverControl(frc::XboxController *codriver_control) {
   m_codriver_control = codriver_control;
 }
+
+void Climber::SetDriverControl(frc::XboxController *driver_control) {
+  m_driver_control = driver_control;
+}
+
 #endif // ENABLE_CLIMBER
