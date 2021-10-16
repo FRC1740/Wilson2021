@@ -65,7 +65,7 @@ void Climber::Go(double speed) {
     m_motor.Set(speed);
   }
   // Retract = Increasing/More Positive
-  else if (speed > 0.0 && m_climberPosition < ConClimber::RET_LIMIT) {
+  else if (speed > 0.0 ) { // && m_climberPosition < ConClimber::RET_LIMIT) {
     printf("Retracting...\n");
     m_motor.Set(speed);
   }
@@ -103,8 +103,27 @@ void Climber::Periodic() {
 
   if ((!m_Locked) &&
      (m_codriver_control != nullptr)) {
-       printf("Climbing!");
-    Climber::Go(m_codriver_control->GetRawAxis(ConLaunchPad::RIGHT_STICK_Y));
+       //printf("Climbing!");
+    
+      // Climber::Go(m_codriver_control->GetRawAxis(ConLaunchPad::RIGHT_STICK_Y));
+      // LaunchPad Joysticks not connected (wiring)
+
+      // XBox Controller Right Stick, Y-Axis
+      // Climber::Go(m_driver_control->GetRawAxis(ConXBOXControl::RIGHT_STICK_Y));
+
+      // LaunchPad Buttons work, so use Green & Yellow for Extend (Descend)/Retract (Climb)
+      // Green Button
+      if (m_codriver_control->GetRawButton(ConLaunchPad::Button::GREEN)) {
+        Climber::Go(1.0);
+      }
+      // Yellow Button
+      else if (m_codriver_control->GetRawButton(ConLaunchPad::Button::YELLOW)) {
+        Climber::Go(-1.0);
+      }
+      else {
+        Climber::Go(0.0);        
+      }
+
   }
 
   if ((m_codriver_control != nullptr) && 

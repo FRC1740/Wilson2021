@@ -118,8 +118,8 @@ namespace ConLaunchPad {
     namespace Button {
         constexpr int RED = 1;  // Jumble Fwd
         constexpr int BLUE = 2; // Jumble Rev
-        constexpr int YELLOW = 3; // Not Used
-        constexpr int GREEN = 4; // Not Used
+        constexpr int YELLOW = 3; // Not Used (Climber?)
+        constexpr int GREEN = 4; // Not Used (Climber?)
         constexpr int WHITE = 5; // Climber Unlock (Hold to unlock)
     }
 
